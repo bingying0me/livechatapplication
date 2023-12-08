@@ -67,7 +67,7 @@ export const addRoomMessage = async (
   const user1RoomRef = doc(firestore, `users/${userAuth.uid}/rooms/${roomId}`);
   const user1Room = await getDoc(user1RoomRef);
   const user1RoomData = user1Room.data();
-  const user2Id = user1RoomData.userId;
+  const user2Id = user1RoomData && user1RoomData.userId;
   const user2RoomRef = collection(firestore, `users/${user2Id}/rooms`);
   const user2Room = await getDocs(user2RoomRef);
   const user2RoomId = user2Room.docs.map((doc) => {
