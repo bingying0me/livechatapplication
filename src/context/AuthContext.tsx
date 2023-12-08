@@ -28,7 +28,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState<UserAuthType | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,7 +37,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
 
       if (user) {
-        setAuthUser(user);
+        const authUser: UserAuthType = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+
+        setAuthUser(authUser);
         setIsLoggedIn(true);
       } else {
         setAuthUser(null);
@@ -46,7 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
 
     return () => unsubscribe();
-  }, [authUser]);
+  }, []); // Removed authUser from the dependency array
 
   const value = {
     authUser,
