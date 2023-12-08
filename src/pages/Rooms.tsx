@@ -24,21 +24,11 @@ const Rooms = () => {
       navigate(`/chatroom/${existingRoom.id}`);
     } else {
       // Create a new room
-      const fetchedNewRoom = await addRoom(authUser, {
+      await addRoom(authUser, {
         userId: userId,
         name: userName,
         date: Date.now().toString(),
       });
-
-      if (fetchedNewRoom) {
-        setRoomList((prevRoomList) => [
-          ...(prevRoomList || []),
-          fetchedNewRoom,
-        ]);
-
-        // Redirect to the new room's page
-        navigate(`/chatroom/${fetchedNewRoom.id}`);
-      }
     }
   };
 
