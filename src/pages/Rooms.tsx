@@ -36,6 +36,10 @@ const Rooms = () => {
     addUserRoom(user.id || '', user.displayName || '');
   };
 
+  const handleRoomClick = (room: RoomList) => {
+    navigate(`/chatroom/${room.id}`);
+  };
+
   useEffect(() => {
     if (!authUser) return;
 
@@ -52,6 +56,7 @@ const Rooms = () => {
           id: roomRef.id,
         };
       });
+      console.log("roomData", roomData)
       setRoomList(roomData || "Unknown Room");
     });
 
@@ -83,13 +88,13 @@ const Rooms = () => {
         <div className="flex flex-wrap">
           {roomList &&
             roomList.map((room) => (
-              <a
+              <div
                 key={room.id}
-                href={`/chatroom/${room.id}`}
+                onClick={() => handleRoomClick(room)}
                 className="flex justify-between bg-gray-900 p-5 m-2 border-2 rounded-md border-white text-white hover:bg-gray-700 cursor-pointer"
               >
                 {room.name}
-              </a>
+              </div>
             ))}
         </div>
       </div>
