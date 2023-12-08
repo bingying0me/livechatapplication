@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
 
     return () => unsubscribe();
-  }, []); // Removed authUser from the dependency array
+  }, []);
 
   const value = {
     authUser,
