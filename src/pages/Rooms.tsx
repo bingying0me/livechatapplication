@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRoomList, addRoom, getUserList } from "../utils/firestore.utils";
+import { addRoom } from "../utils/firestore.utils";
 import { useAuth } from "../context/AuthContext";
 import { RoomList } from "../types/room.types";
 import { UserType } from "../types/user.types";
@@ -10,8 +10,8 @@ import { firestore } from "../utils/firebaseConfig";
 const Rooms = () => {
   const navigate = useNavigate();
   const { authUser } = useAuth();
-  const [roomList, setRoomList] = useState<RoomList[] | null>(null);
-  const [userList, setUserList] = useState<UserType[] | null>(null);
+  const [roomList, setRoomList] = useState<RoomList[]>([]);
+  const [userList, setUserList] = useState<UserType[]>([]);
 
   const addUserRoom = async (userId: string, userName: string) => {
     if (!authUser || !roomList) return;
@@ -48,28 +48,6 @@ const Rooms = () => {
 
   useEffect(() => {
     if (!authUser) return;
-
-    const fetchRooms = async () => {
-      const fetchedRooms = await getRoomList(authUser.uid || '');
-      if (fetchedRooms) {
-        setRoomList(fetchedRooms);
-      }
-    };
-
-    const fetchUsers = async () => {
-      const fetchedUsers = await getUserList();
-
-      // Filter out the authenticated user from the userList
-      const filteredUsers = fetchedUsers?.filter(
-        (user) => user.id !== authUser.uid
-      );
-      if (filteredUsers) {
-        setUserList(filteredUsers);
-      }
-    };
-
-    fetchRooms();
-    fetchUsers();
 
     const roomRef = query(
       collection(firestore, `users/${authUser.uid}/rooms`),

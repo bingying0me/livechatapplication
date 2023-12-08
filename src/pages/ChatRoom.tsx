@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { getRoomMessageList, addRoomMessage } from "../utils/firestore.utils";
+import { addRoomMessage } from "../utils/firestore.utils";
 import { ChatMessage } from "../types/chatmessage.types";
 import { useParams } from "react-router-dom";
 import {
@@ -36,14 +36,6 @@ const ChatRoom = () => {
 
   useEffect(() => {
     if (!authUser || !id) return;
-
-    const fetchMessage = async () => {
-      const fetchedMessage = await getRoomMessageList(authUser.uid || '', id);
-      if (fetchedMessage) {
-        setChatMessages(fetchedMessage);
-      }
-    };
-    fetchMessage();
 
     if (id) {
       const messageRef = query(
