@@ -43,14 +43,14 @@ const Rooms = () => {
   };
 
   const handleAddUserRoomClick = (user: UserType) => {
-    addUserRoom(user.id, user.displayName);
+    addUserRoom(user.id || '', user.displayName || '');
   };
 
   useEffect(() => {
     if (!authUser) return;
 
     const fetchRooms = async () => {
-      const fetchedRooms = await getRoomList(authUser.uid);
+      const fetchedRooms = await getRoomList(authUser.uid || '');
       if (fetchedRooms) {
         setRoomList(fetchedRooms);
       }

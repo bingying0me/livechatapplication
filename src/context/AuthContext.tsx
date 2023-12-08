@@ -3,7 +3,7 @@ import { UserAuthType } from "../types/userAuth.types";
 import { auth } from "../utils/firebaseConfig";
 
 type AuthContextType = {
-  authUser: UserAuthType | null;
+  authUser: UserAuthType | null | undefined;
   setAuthUser: React.Dispatch<React.SetStateAction<UserAuthType | null>>;
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;

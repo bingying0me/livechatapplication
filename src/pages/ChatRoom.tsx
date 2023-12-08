@@ -20,7 +20,7 @@ const ChatRoom = () => {
   const sendMessage = async () => {
     if (!authUser || !id || message.trim() === "") return;
 
-    const newMessage = {
+    const newMessage:ChatMessage = {
       text: message,
       sender: authUser.displayName,
       time: new Date().toLocaleString(),
@@ -38,13 +38,9 @@ const ChatRoom = () => {
     if (!authUser || !id) return;
 
     const fetchMessage = async () => {
-      const fetchedMessage = await getRoomMessageList(authUser.uid, id);
+      const fetchedMessage = await getRoomMessageList(authUser.uid || '', id);
       if (fetchedMessage) {
-        // Sort messages by time before setting the state
-        const sortedMessages = fetchedMessage.sort((a, b) =>
-          new Date(a.time).getTime() - new Date(b.time).getTime()
-        );
-        setChatMessages(sortedMessages);
+        setChatMessages(fetchedMessage);
       }
     };
     fetchMessage();

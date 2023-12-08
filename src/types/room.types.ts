@@ -1,6 +1,6 @@
 export type RoomList = {
-  id?: string;
-  userId: string;
-  name: string;
-  date: string;
+  id?: string | null | undefined;
+  userId: string | null | undefined;
+  name: string | null | undefined;
+  date: string | null | undefined;
 };
